@@ -1,100 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CV Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body class="bg-gray-100 min-h-screen p-6 font-sans">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
-    <!-- Form -->
-    <div class="bg-white p-6 rounded-xl shadow-md">
-      <h2 class="text-xl font-bold mb-4">Fill Your CV</h2>
-      <form id="cv-form" class="space-y-4">
-        <input id="name" placeholder="Full Name" class="w-full p-2 border rounded" />
-        <input id="title" placeholder="Title (e.g. Student)" class="w-full p-2 border rounded" />
-        <textarea id="profile" placeholder="Profile" class="w-full p-2 border rounded"></textarea>
-        <input id="phone" placeholder="Phone" class="w-full p-2 border rounded" />
-        <input id="email" placeholder="Email" type="email" class="w-full p-2 border rounded" />
-        <input id="address" placeholder="Address" class="w-full p-2 border rounded" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CV Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-6 font-sans">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+      <!-- Form -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-bold mb-4">Fill Your CV</h2>
+        <form id="cv-form" class="space-y-4">
+          <input
+            id="name"
+            placeholder="Full Name"
+            class="w-full p-2 border rounded"
+          />
+          <input
+            id="title"
+            placeholder="Title (e.g. Student)"
+            class="w-full p-2 border rounded"
+          />
+          <textarea
+            id="profile"
+            placeholder="Profile"
+            class="w-full p-2 border rounded"
+          ></textarea>
+          <input
+            id="phone"
+            placeholder="Phone"
+            class="w-full p-2 border rounded"
+          />
+          <input
+            id="email"
+            placeholder="Email"
+            type="email"
+            class="w-full p-2 border rounded"
+          />
+          <input
+            id="address"
+            placeholder="Address"
+            class="w-full p-2 border rounded"
+          />
 
-        <div id="education-container" class="space-y-4">
-          <h3 class="font-semibold mb-2">Education</h3>
-          <button type="button" id="add-education" class="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">+ Add Education</button>
-        </div>
-
-        <textarea id="language" placeholder="Languages (one per line)" class="w-full p-2 border rounded"></textarea>
-        <textarea id="skills" placeholder="Computer Skills (one per line)" class="w-full p-2 border rounded"></textarea>
-        <textarea id="volunteer" placeholder="Volunteer Experience" class="w-full p-2 border rounded"></textarea>
-        <label class="block">Upload Photo:
-          <input type="file" id="photo" accept="image/*" class="mt-1" />
-        </label>
-
-        <div class="space-y-4 mt-4">
-          <button id="pay-to-unlock" type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded">
-            Pay $3 to Download PDF
-          </button>
-          <button id="download-btn" onclick="downloadPDF()" disabled
-            class="bg-blue-600 text-white font-semibold py-2 px-4 rounded opacity-50 cursor-not-allowed shadow-lg transition duration-300">
-            Download PDF
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <!-- CV Preview -->
-    <div id="cv-preview" class="bg-white rounded-xl shadow-lg overflow-hidden min-h-[1300px] w-[793px] mx-auto p-6">
-      <div class="grid grid-cols-3 h-full">
-        <!-- Sidebar -->
-        <div class="bg-purple-100 p-6 flex flex-col items-center space-y-6 text-center">
-          <div class="h-28 w-28 rounded-full overflow-hidden border-4 border-white shadow-md">
-            <img id="photo-preview" src="https://via.placeholder.com/150" class="w-full h-full object-cover" />
+          <div id="education-container" class="space-y-4">
+            <h3 class="font-semibold mb-2">Education</h3>
+            <button
+              type="button"
+              id="add-education"
+              class="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            >
+              + Add Education
+            </button>
           </div>
-          <div class="text-left text-sm">
-            <div class="mb-10">
-              <h3 class="uppercase font-bold text-gray-600 text-xs mb-2">Profile</h3>
-              <p id="cv-profile" class="text-gray-700 min-h-[120px]"></p>
+
+          <textarea
+            id="language"
+            placeholder="Languages (one per line)"
+            class="w-full p-2 border rounded"
+          ></textarea>
+          <textarea
+            id="skills"
+            placeholder="Computer Skills (one per line)"
+            class="w-full p-2 border rounded"
+          ></textarea>
+          <textarea
+            id="volunteer"
+            placeholder="Volunteer Experience"
+            class="w-full p-2 border rounded"
+          ></textarea>
+          <label class="block"
+            >Upload Photo:
+            <input type="file" id="photo" accept="image/*" class="mt-1" />
+          </label>
+
+          <div class="space-y-4 mt-4">
+            <a
+              href="https://integralcalculus.gumroad.com/l/clsrxc"
+              target="_blank"
+            >
+              <button
+                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded"
+              >
+                Pay $3 to Download PDF
+              </button>
+            </a>
+            <button
+              id="download-btn"
+              onclick="downloadPDF()"
+              disabled
+              class="bg-blue-600 text-white font-semibold py-2 px-4 rounded opacity-50 cursor-not-allowed shadow-lg transition duration-300"
+            >
+              Download PDF
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- CV Preview -->
+      <div
+        id="cv-preview"
+        class="bg-white rounded-xl shadow-lg overflow-hidden min-h-[1300px] w-[793px] mx-auto p-6"
+      >
+        <div class="grid grid-cols-3 h-full">
+          <!-- Sidebar -->
+          <div
+            class="bg-purple-100 p-6 flex flex-col items-center space-y-6 text-center"
+          >
+            <div
+              class="h-28 w-28 rounded-full overflow-hidden border-4 border-white shadow-md"
+            >
+              <img
+                id="photo-preview"
+                src="https://via.placeholder.com/150"
+                class="w-full h-full object-cover"
+              />
             </div>
-            <div>
-              <h3 class="uppercase font-bold text-gray-600 text-xs mb-2">Contact Me</h3>
-              <div class="flex items-start gap-2 mb-2"><i class="fas fa-phone-alt text-gray-500 mt-1"></i><p id="cv-phone" class="text-sm text-gray-700"></p></div>
-              <div class="flex items-start gap-2 mb-2"><i class="fas fa-envelope text-gray-500 mt-1"></i><p id="cv-email" class="text-sm text-gray-700 break-all"></p></div>
-              <div class="flex items-start gap-2"><i class="fas fa-map-marker-alt text-gray-500 mt-1"></i><p id="cv-address" class="text-sm text-gray-700 break-words max-w-[180px]"></p></div>
+            <div class="text-left text-sm">
+              <div class="mb-10">
+                <h3 class="uppercase font-bold text-gray-600 text-xs mb-2">
+                  Profile
+                </h3>
+                <p id="cv-profile" class="text-gray-700 min-h-[120px]"></p>
+              </div>
+              <div>
+                <h3 class="uppercase font-bold text-gray-600 text-xs mb-2">
+                  Contact Me
+                </h3>
+                <div class="flex items-start gap-2 mb-2">
+                  <i class="fas fa-phone-alt text-gray-500 mt-1"></i>
+                  <p id="cv-phone" class="text-sm text-gray-700"></p>
+                </div>
+                <div class="flex items-start gap-2 mb-2">
+                  <i class="fas fa-envelope text-gray-500 mt-1"></i>
+                  <p id="cv-email" class="text-sm text-gray-700 break-all"></p>
+                </div>
+                <div class="flex items-start gap-2">
+                  <i class="fas fa-map-marker-alt text-gray-500 mt-1"></i>
+                  <p
+                    id="cv-address"
+                    class="text-sm text-gray-700 break-words max-w-[180px]"
+                  ></p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="col-span-2 p-8">
-          <div class="mb-12">
-            <h1 id="cv-name" class="text-4xl font-extrabold text-gray-900 mb-2">Full Name</h1>
-            <p id="cv-title" class="text-xl text-gray-600 mb-10">Title</p>
-          </div>
-          <div class="mb-6">
-            <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">Education</h3>
-            <div id="cv-education" class="text-sm text-gray-700 space-y-2"></div>
-          </div>
-          <div class="mb-12">
-            <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">Languages</h3>
-            <ul id="cv-language" class="list-disc list-inside text-sm text-gray-700 min-h-[100px]"></ul>
-          </div>
-          <div class="mb-12">
-            <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">Computer Skills</h3>
-            <ul id="cv-skills" class="list-disc list-inside text-sm text-gray-700 min-h-[100px]"></ul>
-          </div>
-          <div class="mb-12">
-            <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">Volunteer Experience</h3>
-            <p id="cv-volunteer" class="text-sm text-gray-700 whitespace-pre-line min-h-[150px]"></p>
+          <!-- Main Content -->
+          <div class="col-span-2 p-8">
+            <div class="mb-12">
+              <h1
+                id="cv-name"
+                class="text-4xl font-extrabold text-gray-900 mb-2"
+              >
+                Full Name
+              </h1>
+              <p id="cv-title" class="text-xl text-gray-600 mb-10">Title</p>
+            </div>
+            <div class="mb-6">
+              <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">
+                Education
+              </h3>
+              <div
+                id="cv-education"
+                class="text-sm text-gray-700 space-y-2"
+              ></div>
+            </div>
+            <div class="mb-12">
+              <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">
+                Languages
+              </h3>
+              <ul
+                id="cv-language"
+                class="list-disc list-inside text-sm text-gray-700 min-h-[100px]"
+              ></ul>
+            </div>
+            <div class="mb-12">
+              <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">
+                Computer Skills
+              </h3>
+              <ul
+                id="cv-skills"
+                class="list-disc list-inside text-sm text-gray-700 min-h-[100px]"
+              ></ul>
+            </div>
+            <div class="mb-12">
+              <h3 class="uppercase font-bold text-sm text-gray-500 mb-4">
+                Volunteer Experience
+              </h3>
+              <p
+                id="cv-volunteer"
+                class="text-sm text-gray-700 whitespace-pre-line min-h-[150px]"
+              ></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
