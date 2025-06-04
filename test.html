@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-100">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Resume Builder</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8">
+  <div class="max-w-4xl mx-auto">
+    <!-- Form -->
+    <div class="bg-white shadow rounded-lg p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Fill in Your Details</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="text" id="name" placeholder="Full Name" class="border p-2 rounded w-full">
+        <input type="text" id="title" placeholder="Title (e.g. Motivated Student)" class="border p-2 rounded w-full">
+        <input type="email" id="email" placeholder="Email" class="border p-2 rounded w-full">
+        <input type="tel" id="phone" placeholder="Phone" class="border p-2 rounded w-full">
+        <input type="text" id="linkedin" placeholder="LinkedIn URL" class="border p-2 rounded w-full">
+        <input type="text" id="address" placeholder="Address" class="border p-2 rounded w-full">
+        <textarea id="about" placeholder="About Me" class="border p-2 rounded w-full md:col-span-2"></textarea>
+
+        <input type="text" id="skills" placeholder="Skills (comma separated)" class="border p-2 rounded w-full md:col-span-2">
+        <input type="text" id="languages" placeholder="Languages (comma separated)" class="border p-2 rounded w-full md:col-span-2">
+        <input type="text" id="software" placeholder="Software (comma separated)" class="border p-2 rounded w-full md:col-span-2">
+
+        <textarea id="education" placeholder="Education (e.g. 2020-2024 BSc XYZ)" class="border p-2 rounded w-full md:col-span-2"></textarea>
+        <textarea id="volunteer" placeholder="Volunteer Experience" class="border p-2 rounded w-full md:col-span-2"></textarea>
+        <textarea id="interests" placeholder="Interests (comma separated)" class="border p-2 rounded w-full md:col-span-2"></textarea>
+      </div>
+      <button onclick="generateResume()" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Generate Resume</button>
+    </div>
+
+    <!-- Resume Template -->
+    <div id="resume" class="bg-white shadow rounded-lg p-6 hidden">
+      <!-- Will be filled dynamically! -->
+    </div>
+  </div>
+
+  <script>
+    function generateResume() {
+      // Grab input values
+      const name = document.getElementById('name').value;
+      const title = document.getElementById('title').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const linkedin = document.getElementById('linkedin').value;
+      const address = document.getElementById('address').value;
+      const about = document.getElementById('about').value;
+
+      const skills = document.getElementById('skills').value.split(',').map(s => s.trim());
+      const languages = document.getElementById('languages').value.split(',').map(l => l.trim());
+      const software = document.getElementById('software').value;
+
+      const education = document.getElementById('education').value;
+      const volunteer = document.getElementById('volunteer').value;
+      const interests = document.getElementById('interests').value.split(',').map(i => i.trim());
+
+      // Build HTML dynamically
+      const resumeHTML = `
+      <div class="flex items-center border-b pb-4 mb-4">
+        <img src="https://via.placeholder.com/120" alt="Profile Photo" class="rounded-full w-24 h-24 object-cover mr-4">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800">${name}</h1>
+          <p class="text-gray-600 italic">“${title}”</p>
+          <div class="flex flex-wrap mt-2 text-sm text-gray-700">
+            <p class="mr-4 flex items-center">📞 ${phone}</p>
+            <p class="mr-4 flex items-center">✉️ ${email}</p>
+            <p class="flex items-center">🔗 ${linkedin}</p>
+          </div>
+          <p class="text-sm text-gray-500">${address}</p>
+        </div>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-1">About me</h2>
+        <p class="text-gray-700 text-sm">${about}</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-1">Skills</h2>
+        <ul class="list-disc list-inside text-sm text-gray-700">
+          ${skills.map(skill => `<li>${skill}</li>`).join('')}
+        </ul>
+        <p class="text-sm text-gray-700 mt-2"><strong>Software:</strong> ${software}</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-1">Languages</h2>
+        <ul class="list-disc list-inside text-sm text-gray-700">
+          ${languages.map(lang => `<li>${lang}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-1">Education</h2>
+        <p class="text-sm text-gray-700 whitespace-pre-line">${education}</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="font-semibold text-gray-800 mb-1">Volunteer Experience</h2>
+        <p class="text-sm text-gray-700 whitespace-pre-line">${volunteer}</p>
+      </div>
+      <div>
+        <h2 class="font-semibold text-gray-800 mb-1">Interests</h2>
+        <ul class="list-disc list-inside text-sm text-gray-700">
+          ${interests.map(interest => `<li>${interest}</li>`).join('')}
+        </ul>
+      </div>
+      `;
+
+      // Insert into resume div
+      document.getElementById('resume').innerHTML = resumeHTML;
+      document.getElementById('resume').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
