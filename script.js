@@ -77,16 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (this.files[0]) reader.readAsDataURL(this.files[0]);
   });
 
-  // Payment simulation (replace with real Stripe/Razorpay later)
-  document.getElementById("pay-to-unlock").addEventListener("click", () => {
-    const confirmPay = confirm("Simulate $3 payment? Replace with Stripe or Razorpay later.");
-    if (confirmPay) {
-      const btn = document.getElementById("download-btn");
-      btn.disabled = false;
-      btn.classList.remove("opacity-50", "cursor-not-allowed");
-      alert("Payment successful. You can now download your CV as PDF!");
-    }
-  });
+
 });
 
 async function downloadPDF() {
